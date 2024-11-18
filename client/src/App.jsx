@@ -1,7 +1,16 @@
+import { Route, Routes } from "react-router-dom";
+import Home from "./pages/Home";
+import Result from "./pages/Result";
+import BuyCredit from "./pages/BuyCredit";
+
 function App() {
   return (
     <>
-      <h1 className="text-red-500 text-3xl">Imagify</h1>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/result" element={<Result />} />
+        <Route path="/buy-credit" element={<BuyCredit />} />
+      </Routes>
     </>
   );
 }
