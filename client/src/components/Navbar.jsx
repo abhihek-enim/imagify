@@ -5,7 +5,7 @@ import { AppContext } from "../context/AppContext.jsx";
 // import { useState } from "react";
 const Navbar = () => {
   const navigate = useNavigate();
-  const { user } = useContext(AppContext);
+  const { user, setShowLogin } = useContext(AppContext);
   return (
     <div className="flex justify-between items-center py-4">
       <Link to="/">
@@ -46,7 +46,10 @@ const Navbar = () => {
             >
               Pricing
             </p>
-            <button className="bg-zinc-800 text-white rounded-full px-7 py-2 text-sm sm:px-10">
+            <button
+              onClick={() => setShowLogin(true)}
+              className="bg-zinc-800 text-white rounded-full px-7 py-2 text-sm sm:px-10"
+            >
               Login
             </button>
           </div>
