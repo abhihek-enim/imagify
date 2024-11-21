@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { asyncHandler } from "../utils/asyncHandler.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
+import mongoose from "mongoose";
 
 const registerUser = asyncHandler(async (req, res) => {
   const { name, email, password } = req.body;
@@ -79,8 +80,11 @@ const loginUser = asyncHandler(async (req, res) => {
 });
 
 const getCredits = asyncHandler(async (req, res) => {
-  const { userId } = req.user?._id;
-  const user = await User.findById(userId).select("-password");
+  const userId = req.user._id;
+  console.log(userId);
+  const user = await User.findById(new mongoose.Types.ObjectId(userId)).select(
+    "-password"
+  );
   if (!user) {
     return new ApiError(400, "User does not exists");
   }
