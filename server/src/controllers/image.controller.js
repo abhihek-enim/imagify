@@ -34,6 +34,10 @@ export const generateImage = asyncHandler(async (req, res) => {
   const resultImage = `data:image/png;base64,${base64Image}`;
   await User.findByIdAndUpdate(user._id, { credits: user.credits - 1 });
   return res.json(
-    new ApiResponse(200, resultImage, "Image generated successfully")
+    new ApiResponse(
+      200,
+      { resultImage, credits: user.credits },
+      "Image generated successfully"
+    )
   );
 });
