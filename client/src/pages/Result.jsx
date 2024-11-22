@@ -1,15 +1,21 @@
 /* eslint-disable no-unused-vars */
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { assets } from "../assets/assets";
 import { motion } from "framer-motion";
+import { AppContext } from "../context/AppContext";
 
 const Result = () => {
+  const { generateImage, user } = useContext(AppContext);
   const [image, setImage] = useState(assets.sample_img_1);
-  const [isImageLoaded, setIsImageLoaded] = useState(true);
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
-  const onSubmitHandler = (e) => {
+  const onSubmitHandler = async (e) => {
     e.PreventDefault();
+    setLoading(true);
+    let generatedImage = await generateImage(input);
+    setImage(generatedImage);
+    setLoading(false);
   };
   return (
     <motion.form
