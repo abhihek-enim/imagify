@@ -5,12 +5,15 @@ import { User } from "../models/user.model.js";
 import { ApiError } from "../utils/ApiError.js";
 
 const userAuth = asyncHandler(async (req, res, next) => {
-  const { token } = req.headers;
-  if (!token) {
+  const { authorization } = req.headers;
+  if (!authorization) {
     return res.json(new ApiResponse(400, {}, "Login again."));
   }
 
-  const tokenDecode = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
+  const tokenDecode = jwt.verify(
+    authorization,
+    process.env.ACCESS_TOKEN_SECRET
+  );
   console.log(tokenDecode);
   const user = await User.findById(tokenDecode.id).select("-password");
   console.log(user);

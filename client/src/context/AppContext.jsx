@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { createContext, useState } from "react";
+import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { getData } from "../../apiService";
 
@@ -13,7 +13,7 @@ const AppContextProvider = (props) => {
   const [credit, setCredit] = useState(0);
   const loadCreditsData = async () => {
     try {
-      const res = await getData("/api/v1/users/getCredits");
+      const res = await getData("/api/v1/users/credits");
       if (res.success) {
         setCredit(res.data.credits);
         setUser(res.data.user);
@@ -24,6 +24,11 @@ const AppContextProvider = (props) => {
       console.log(error);
       toast.error(error.message);
     }
+  };
+  const logout = async () => {
+    localStorage.removeItem("token");
+    setToken(null);
+    setUser(null);
   };
   const value = {
     user,
@@ -36,7 +41,14 @@ const AppContextProvider = (props) => {
     credit,
     setCredit,
     loadCreditsData,
+    logout,
   };
+
+  useEffect(() => {
+    if (token) {
+      loadCreditsData();
+    }
+  }, [token]);
   return (
     <AppContext.Provider value={value}>{props.children}</AppContext.Provider>
   );

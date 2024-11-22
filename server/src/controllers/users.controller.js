@@ -93,7 +93,7 @@ const getCredits = asyncHandler(async (req, res) => {
     .json(
       new ApiResponse(
         200,
-        { credits: user.credits, name: user.name, email: user.email },
+        { credits: user.credits, user: user },
         "Credits fetched successfully."
       )
     );

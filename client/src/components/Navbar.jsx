@@ -5,7 +5,7 @@ import { AppContext } from "../context/AppContext.jsx";
 // import { useState } from "react";
 const Navbar = () => {
   const navigate = useNavigate();
-  const { user, setShowLogin } = useContext(AppContext);
+  const { user, setShowLogin, logout, credit } = useContext(AppContext);
   return (
     <div className="flex justify-between items-center py-4">
       <Link to="/">
@@ -21,10 +21,10 @@ const Navbar = () => {
             >
               <img className="w-5" src={assets.credit_star} alt="" />
               <p className="text-xs sm:text-sm font-medium text-gray-600">
-                Credits Left: 50
+                Credits Left: {credit}
               </p>
             </button>
-            <p className="text-gray-600 max-sm:hidden pl-4">Hi,Abhi</p>
+            <p className="text-gray-600 max-sm:hidden pl-4">{`Hi, ${user.name}`}</p>
             <div className="relative group cursor-pointer">
               <img
                 src={assets.profile_icon}
@@ -33,7 +33,12 @@ const Navbar = () => {
               />
               <div className="absolute hidden group-hover:block top-0 right-0 z-10 text-black rounded pt-12 transition">
                 <ul className="list-none m-0 p-2 bg-white rounded-md border text-sm">
-                  <li className="py-1 px-2 cursor-pointer pr-10">Logout</li>
+                  <li
+                    onClick={logout}
+                    className="py-1 px-2 cursor-pointer pr-10"
+                  >
+                    Logout
+                  </li>
                 </ul>
               </div>
             </div>

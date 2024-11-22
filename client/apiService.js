@@ -24,7 +24,7 @@ export const getData = async (url, customConfig = {}) => {
     const token = localStorage.getItem("token");
     const config = {
       headers: {
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? token : "",
         ...customConfig.headers,
       },
       ...customConfig,
@@ -43,7 +43,7 @@ export const postData = async (url, data, customConfig = {}) => {
 
     const config = {
       headers: {
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? `${token}` : "",
         ...customConfig.headers,
       },
       ...customConfig,
@@ -70,7 +70,7 @@ export const putData = async (url, data, customConfig = {}) => {
     const token = localStorage.getItem("token");
     const config = {
       headers: {
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? `${token}` : "",
         ...customConfig.headers,
       },
       ...customConfig,
@@ -88,7 +88,7 @@ export const patchData = async (url, data, customConfig = {}) => {
     const token = localStorage.getItem("token");
     const config = {
       headers: {
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? `${token}` : "",
         ...customConfig.headers,
       },
       ...customConfig,
@@ -106,7 +106,7 @@ export const deleteData = async (url, customConfig = {}) => {
     const token = localStorage.getItem("token");
     const config = {
       headers: {
-        Authorization: token ? `Bearer ${token}` : "",
+        Authorization: token ? `${token}` : "",
         ...customConfig.headers,
       },
       ...customConfig,
