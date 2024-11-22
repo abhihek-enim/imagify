@@ -16,6 +16,7 @@ const AppContextProvider = (props) => {
       const res = await getData("/api/v1/users/getCredits");
       if (res.success) {
         setCredit(res.data.credits);
+        setUser(res.data.user);
       } else {
         toast.error("Error occured while fetching credits.");
       }
