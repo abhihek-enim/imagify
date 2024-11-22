@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import { getData } from "../../apiService";
+import { getData, postData } from "../../apiService";
 
 export const AppContext = createContext();
 
@@ -25,6 +25,21 @@ const AppContextProvider = (props) => {
       toast.error(error.message);
     }
   };
+  const generateImage = async (prompt) => {
+    try {
+      let res = await postData("/api/v1/image/generateImage", {
+        userId: user._id,
+        prompt: prompt,
+      });
+      if (res.success) {
+        setCredit(res.data.credits);
+        return res.data.resultImage;
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error.message);
+    }
+  };
   const logout = async () => {
     localStorage.removeItem("token");
     setToken(null);
@@ -42,6 +57,7 @@ const AppContextProvider = (props) => {
     setCredit,
     loadCreditsData,
     logout,
+    generateImage,
   };
 
   useEffect(() => {
