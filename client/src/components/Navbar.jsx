@@ -16,7 +16,7 @@ const Navbar = () => {
         {user ? (
           <div className="flex gap-2 items-center sm:gap-4">
             <button
-              onClick={() => navigate("/buyCredit")}
+              onClick={() => navigate("/buy-credit")}
               className=" px-4 py-2 sm:px-6 sm:py-3 flex gap-1 items-center rounded-full bg-blue-100 hover:scale-105 transition-all duration-700 "
             >
               <img className="w-5" src={assets.credit_star} alt="" />

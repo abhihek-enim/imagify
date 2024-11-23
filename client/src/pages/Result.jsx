@@ -11,10 +11,16 @@ const Result = () => {
   const [loading, setLoading] = useState(false);
   const [input, setInput] = useState("");
   const onSubmitHandler = async (e) => {
-    e.PreventDefault();
+    e.preventDefault();
     setLoading(true);
-    let generatedImage = await generateImage(input);
-    setImage(generatedImage);
+    if (input) {
+      let generatedImage = await generateImage(input);
+      setImage(generatedImage);
+      if (generatedImage) {
+        setIsImageLoaded(true);
+        setImage(generatedImage);
+      }
+    }
     setLoading(false);
   };
   return (
@@ -30,9 +36,11 @@ const Result = () => {
         <div className=" relative">
           <img src={image} className="max-w-sm rounded" alt="" />
           <span
-            className={`absolute bottom-0 left-0 h-1 bg-blue-500 ${
-              loading ? "w-full  transition-all duration-[10s]" : ""
-            }`}
+            className="absolute bottom-0 left-0 h-1 bg-blue-500 transition-all"
+            style={{
+              width: loading ? "100%" : "0%",
+              transitionDuration: "10s",
+            }}
           />
         </div>
         <p className={!loading ? "hidden" : "block"}>Loading....</p>

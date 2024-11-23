@@ -2,6 +2,7 @@
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import { getData, postData } from "../../apiService";
+import { useNavigate } from "react-router-dom";
 
 export const AppContext = createContext();
 
@@ -11,6 +12,7 @@ const AppContextProvider = (props) => {
   const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
   const [token, setToken] = useState(localStorage.getItem("token"));
   const [credit, setCredit] = useState(0);
+  const navigate = useNavigate();
   const loadCreditsData = async () => {
     try {
       const res = await getData("/api/v1/users/credits");
@@ -32,8 +34,14 @@ const AppContextProvider = (props) => {
         prompt: prompt,
       });
       if (res.success) {
-        setCredit(res.data.credits);
+        loadCreditsData();
         return res.data.resultImage;
+      } else {
+        toast.error(res.data.message);
+        loadCreditsData();
+        if (res.data.credits === 0) {
+          navigate("/buy-credit");
+        }
       }
     } catch (error) {
       console.log(error);
@@ -44,6 +52,7 @@ const AppContextProvider = (props) => {
     localStorage.removeItem("token");
     setToken(null);
     setUser(null);
+    navigate("/");
   };
   const value = {
     user,
