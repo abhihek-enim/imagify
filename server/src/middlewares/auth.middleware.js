@@ -14,7 +14,7 @@ const userAuth = asyncHandler(async (req, res, next) => {
     authorization,
     process.env.ACCESS_TOKEN_SECRET
   );
-  console.log(tokenDecode);
+  // console.log(tokenDecode);
   const user = await User.findById(tokenDecode.id).select("-password");
   console.log(user);
   if (!user) {
